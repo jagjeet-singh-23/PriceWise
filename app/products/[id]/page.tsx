@@ -1,3 +1,4 @@
+import PriceInfoCard from "@/components/PriceInfoCard";
 import { getProductById } from "@/lib/actions";
 import { formatNumber } from "@/lib/utils";
 import { Product } from "@/types";
@@ -70,7 +71,6 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               </div>
             </div>
           </div>
-
           <div className="product-info">
             <div className="flex flex-col gap-2">
               <p className="text-[34px] font-bold text-secondary">
@@ -96,20 +96,88 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                   </p>
                 </div>
                 <div className="product-reviews">
-                  <Image 
+                  <Image
                     src={"/assets/icons/comment.svg"}
                     alt="comment"
                     width={16}
                     height={16}
                   />
-                  <p className="text-sm text-black opacity-50">
+                  <p className="text-sm text-secondary font-semibold">
                     {product.reviewsCount} reviews
                   </p>
                 </div>
               </div>
+              <p className="text-sm text-black opacity-50">
+                <span className="text-primary-green font-semibold">93%</span> of
+                buyers recommend this product
+              </p>
             </div>
           </div>
+          <div className="flex flex-col my-7 gap-5">
+            <div className="flex flex-wrap gap-5">
+              <PriceInfoCard
+                title="Current Price"
+                iconSrc={`/assets/icons/price-tag.svg`}
+                value={`${product.currency} ${formatNumber(
+                  product.currentPrice
+                )}`}
+              />
+              <PriceInfoCard
+                title="Average Price"
+                iconSrc={`/assets/icons/chart.svg`}
+                value={`${product.currency} ${formatNumber(
+                  product.averagePrice
+                )}`}
+              />
+              <PriceInfoCard
+                title="Highest Price"
+                iconSrc={`/assets/icons/arrow-up.svg`}
+                value={`${product.currency} ${formatNumber(
+                  product.highestPrice
+                )}`}
+              />
+              <PriceInfoCard
+                title="Lowest Price"
+                iconSrc={`/assets/icons/arrow-down.svg`}
+                value={`${product.currency} ${formatNumber(
+                  product.lowestPrice
+                )}`}
+              />
+            </div>
+          </div>
+          Modal
         </div>
+      </div>
+      <div className="flex flex-col gap-16 border-2 border-red-500">
+        <div className="flex flex-col gap-5">
+          <h3 className="text-2xl text-secondary font-semibold">
+            Product Description
+          </h3>
+          <div className="flex flex-col gap-4">
+            {product?.description?.split("\n")}
+          </div>
+        </div>
+        <button
+          className="
+            btn 
+            w-fit 
+            mx-auto 
+            flex 
+            items-center 
+            justify-center 
+            gap-3 
+            min-w-[200px]"
+        >
+          <Image
+            src={"/assets/icons/bag.svg"}
+            alt="check"
+            width={22}
+            height={22}
+          />
+          <Link href={"/"} className="text-base text-white">
+            Buy Now
+          </Link>
+        </button>
       </div>
     </div>
   );
